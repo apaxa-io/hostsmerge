@@ -1,5 +1,7 @@
 package main
 
+import "os/user"
+
 func configPath() string {
 	const suffix = "\\AppData\\Roaming\\apaxa.io\\hostsmerge\\config.json"
 	u, err := user.Current()
