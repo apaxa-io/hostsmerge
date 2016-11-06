@@ -18,15 +18,17 @@ type dnsCache struct {
 	l sync.RWMutex
 }
 
-func (c *dnsCache) CleanOutdated() {
+func (c *dnsCache) CleanOutdated() (removed int) {
 	now := time.Now()
 	c.l.Lock()
 	defer c.l.Unlock()
 	for key, value := range c.m {
 		if value.Till.Before(now) {
 			delete(c.m, key)
+			removed++
 		}
 	}
+	return
 }
 
 func (c *dnsCache) Add(fqdn string, exists bool, till time.Time) {

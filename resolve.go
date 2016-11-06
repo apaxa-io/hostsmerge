@@ -12,7 +12,8 @@ var cache dnsCache
 
 func initCache(c config) (err error) {
 	err = cache.ReadFromFile(c.CacheFile)
-	cache.CleanOutdated()
+	removed := cache.CleanOutdated()
+	log.Printf("Cache: %v of %v records removed as outdated\n", removed, cache.Len()+removed)
 	return
 }
 
